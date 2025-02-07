@@ -150,7 +150,7 @@ namespace mem
 		BYTE nop2[] = { 0x66, 0x90 }; // 0x66 0x99 (safe, officially recognized as a 2-byte NOP).
 
 		DWORD oldprotect;
-		VirtualProtect((PVOID*)target, size, PAGE_EXECUTE_READWRITE, &oldprotect);
+		VirtualProtect((PVOID*)start_address, size, PAGE_EXECUTE_READWRITE, &oldprotect);
 		if (buffer)
 			memcpy((void*)buffer, (const void*)target, size);
 
@@ -163,6 +163,6 @@ namespace mem
 			memcpy((void*)target, &nop2[1], 1);
 		}
 
-		VirtualProtect((PVOID*)target, size, oldprotect, &oldprotect);
+		VirtualProtect((PVOID*)start_address, size, oldprotect, &oldprotect);
 	}
 }
